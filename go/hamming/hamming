@@ -1,0 +1,48 @@
+/*package hamming
+
+import (
+	"errors"
+	"strings"
+)
+
+//Distance is the function that the test expects to pass argumenets to
+func Distance(a, b string) (int, error) {
+	if len(a) != len(b) {
+		return 0, errors.New("DNA Length Missmatch")
+	}
+	a1 := make([]string, len(a))
+	b1 := make([]string, len(b))
+	a2 := strings.ToUpper(a)
+	b2 := strings.ToUpper(b)
+	counter := 0
+	for i := 0; i < len(a); i++ {
+		if a2[i] == 'A' || a2[i] == 'C' || a2[i] == 'T' || a2[i] == 'G' {
+			a1[counter] = string(a2[i])
+			counter++
+		}
+	}
+	counter = 0
+	for i := 0; i < len(b); i++ {
+		if b2[i] == 'A' || b2[i] == 'C' || b2[i] == 'T' || b2[i] == 'G' {
+			b1[counter] = string(b2[i])
+			counter++
+		}
+	}
+
+	count := 0
+	for x := 0; x < len(a1); x++ {
+		if string(a1[x]) != string(b1[x]) {
+			count++
+		}
+	}
+	return count, nil
+}
+
+/* This would have thrown out any result that had an invalid character
+f := func(r rune) bool {
+	return r != 'A' && r != 'C' && r != 'G' && r != 'T'
+}
+if strings.IndexFunc(a, f) != -1 && a != "" || strings.IndexFunc(b, f) != -1 && b != "" {
+
+}
+*/
