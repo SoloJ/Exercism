@@ -5,6 +5,7 @@ package lsproduct
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"unicode"
 )
 
@@ -13,14 +14,14 @@ import (
 func LargestSeriesProduct(in string, n int) (int, error) {
 	//var temp []string
 	//var trimmed []string
-	var out int
+	out := 1
 	switch {
 	case len(in) < n:
 		return -1, errors.New("Span cannot be larger than string length")
 	case len(in) == n:
 		for i := 0; i < len(in); i++ {
-			out = out * int(in[i])
-			fmt.Print(int(in[i]), "\n")
+			j, _ := strconv.Atoi(string(in[i]))
+			out = out * j
 		}
 		return out, nil
 	case in == "" || n == 0:
@@ -31,7 +32,13 @@ func LargestSeriesProduct(in string, n int) (int, error) {
 		if unicode.IsDigit(rune(in[i])) == false {
 			return -1, errors.New("nope")
 		}
-		if out < int(in[i])*int(in[i+1])*int(in[i+2]) {
+		a, _ := strconv.Atoi(string(in[i]))
+		b, _ := strconv.Atoi(string(in[i+1]))
+		c, _ := strconv.Atoi(string(in[i+2]))
+		if out < a*b*c {
+			out = a * b * c
+			fmt.Print(out, "\n")
+
 		}
 	}
 	return out, nil
