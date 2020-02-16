@@ -1,76 +1,45 @@
-// Package cryptosquare is a utility to encode
-// strings of text.
+/// Package lsproduct is a utility to calculate the largest
+// product for contiguous substring of predefined length.
 package main
 
 import (
 	"fmt"
-	"math"
-	"unicode"
+	"strconv"
 )
 
-// Encode is the function that the test expects to
-// pass strings to
+// LargestSeriesProduct is the function that the test suite
+// expects to pass data to.
 func main() {
-	in := "Time is an illusion. Lunchtime doubly"
-	a := normalize(in)
-	fmt.Print(a, "\n")
-	b, c, r := rectangle(a)
-	fmt.Print(b, "\n")
-	fmt.Print(encrypt(b, c, r), "\n")
-}
-func normalize(in string) string {
-	var out string
-	for _, val := range in {
-		if unicode.IsLetter(val) || unicode.IsDigit(val) {
-			out = out + string(unicode.ToLower(val))
-		}
-	}
-	return out
-}
-func rectangle(in string) ([]string, int, int) {
-	stringLength := len(in)
-	root := math.Sqrt(float64(len(in)))
-	c := int(math.Ceil(root))
-	var r int
-	var blanks int
+	//var trimmed []string
+	in := "0123456789"
+	n := 2
+	out := 1
 	switch {
-	case root < float64(c):
-		r = c - 1
-	case root == float64(c):
-		r = c
-	}
-	switch {
-	case c*r-stringLength > 0:
-		blanks = r*c - stringLength
-
-	case c*r-stringLength < 0:
-		blanks = 6 - (stringLength - r*c)
-		r = c
-
-	case c*r-stringLength == 0:
-		blanks = 0
-	}
-	for i := 0; i < blanks; i++ {
-		in = in + " "
-	}
-	counter := 0
-	out := make([]string, 0)
-	fmt.Print(c, r, "\n")
-	for i := 0; i < r; i++ {
-		out = append(out, in[counter:counter+c])
-		counter += c
-	}
-	return out, c, r
-}
-func encrypt(in []string, c int, r int) string {
-	var out string
-	for i := 0; i < c; i++ {
-		if i != 0 {
-			out = out + " "
+	case len(in) < n:
+		fmt.Print("return -1")
+	case len(in) == n:
+		for i := 0; i < len(in); i++ {
+			j, _ := strconv.Atoi(string(in[i]))
+			out = out * j
 		}
-		for j := 0; j < r; j++ {
-			out = out + string(in[j][i])
-		}
+		fmt.Print("return -1")
+	case in == "" || n == 0:
+		fmt.Print(out)
 	}
-	return out
+	temp := 1
+	out = 1
+	for i := 0; i <= len(in)-n; i++ {
+		temp = 1
+		for j := 0; j < n; j++ {
+			f, _ := strconv.Atoi(string(in[i+j]))
+			temp = temp * f
+			fmt.Print("1 ", temp, " ", f, "\n")
+		}
+		if out < temp {
+			out = temp
+			fmt.Print("2 ", out, "\n")
+		}
+		fmt.Print("3 clear", out, "\n")
+	}
+	fmt.Print(out)
 }

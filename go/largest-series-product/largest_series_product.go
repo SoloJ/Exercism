@@ -4,7 +4,6 @@ package lsproduct
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"unicode"
 )
@@ -12,33 +11,38 @@ import (
 // LargestSeriesProduct is the function that the test suite
 // expects to pass data to.
 func LargestSeriesProduct(in string, n int) (int, error) {
-	//var temp []string
 	//var trimmed []string
-	out := 1
+	out := 0
 	switch {
 	case len(in) < n:
 		return -1, errors.New("Span cannot be larger than string length")
 	case len(in) == n:
+		out = 1
 		for i := 0; i < len(in); i++ {
 			j, _ := strconv.Atoi(string(in[i]))
 			out = out * j
 		}
 		return out, nil
 	case in == "" || n == 0:
-		return 0, nil
+		return 1, nil
+	case n < 0:
+		return -1, errors.New("invalide span")
 	}
-	//trimmed = strings.Split(in, "0")
-	for i := 0; i < len(in)-2; i++ {
-		if unicode.IsDigit(rune(in[i])) == false {
-			return -1, errors.New("nope")
+	temp := 1
+	out = 0
+	for _, g := range in {
+		if unicode.IsDigit(g) == false {
+			return -1, errors.New("Non integer detected")
 		}
-		a, _ := strconv.Atoi(string(in[i]))
-		b, _ := strconv.Atoi(string(in[i+1]))
-		c, _ := strconv.Atoi(string(in[i+2]))
-		if out < a*b*c {
-			out = a * b * c
-			fmt.Print(out, "\n")
-
+	}
+	for i := 0; i <= len(in)-n; i++ {
+		temp = 1
+		for j := 0; j < n; j++ {
+			f, _ := strconv.Atoi(string(in[i+j]))
+			temp = temp * f
+		}
+		if out < temp {
+			out = temp
 		}
 	}
 	return out, nil
