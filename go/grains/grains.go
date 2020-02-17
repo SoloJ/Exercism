@@ -5,7 +5,6 @@ package grains
 
 import (
 	"errors"
-	"math"
 )
 
 // Square takes the index of the chessboard square and
@@ -17,14 +16,12 @@ func Square(in int) (uint64, error) {
 	case in > 64 || in < 1:
 		return 0, errors.New("invalid input")
 	default:
-		return uint64(math.Pow(2, float64(in-1))), nil
+		return 1 << (in - 1), nil
 	}
 }
 
 // Total returns the total grains of rice on the board.
 func Total() uint64 {
-	var c uint64
-	c = (uint64(math.Pow(2, 64) - float64(1<<10)))
-
-	return uint64(c)
+	const c = 1<<64 - 1
+	return c
 }
