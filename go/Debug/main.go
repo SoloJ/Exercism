@@ -1,14 +1,14 @@
 // Package clock is a utility that takes in hour and
 // minute data and outputs a time based on requirements.
-package clock
+package main
 
 import "fmt"
 
 // CreateClock takes in hour and min its and
 // outputs the string clock reading they denote.
-func CreateClock(h, m int) string {
-	h := 25
-	m := 160
+func main() {
+	h := 201
+	m := 3001
 	hour := h % 24
 	var minute int
 	switch {
