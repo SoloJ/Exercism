@@ -11,8 +11,6 @@ import (
 // returns the number of grains of rine on it.
 func Square(in int) (uint64, error) {
 	switch {
-	case in == 1:
-		return 1, nil
 	case in > 64 || in < 1:
 		return 0, errors.New("invalid input")
 	default:
@@ -22,6 +20,5 @@ func Square(in int) (uint64, error) {
 
 // Total returns the total grains of rice on the board.
 func Total() uint64 {
-	const c = 1<<64 - 1
-	return c
+	return 1<<64 - 1
 }
