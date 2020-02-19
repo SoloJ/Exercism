@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+// Clock defines the struct that is the integer
+// values of a clock.
 type Clock struct {
 	hours, minutes int
 }
@@ -37,39 +39,42 @@ func New(h, m int) Clock {
 }
 
 // Add impliments a function that adds minutes
-//o the clock time and returns a string.
+// to the clock time and returns a string.
 func (c Clock) Add(minutes int) Clock {
+	min := (minutes + c.minutes) / 60
+	c.hours = (((c.hours) % 24) + min) % 24
+	c.minutes = (minutes + c.minutes) % 60
+	return c
+}
+
+// Subtract impliments a function that subtracts minutes
+// to the clock time and returns a string.
+func (c Clock) Subtract(minutes int) Clock {
 	min := (minutes + c.minutes) / 60
 	if (minutes + c.minutes) < 0 {
 		min = (minutes+c.minutes)/60 - 1
 	}
 	switch {
-	case c.hours >= 0:
-		c.hours = (((c.hours) % 24) + min) % 24
 	case ((((c.hours) % 24) + 24) + min) < 0:
 		c.hours = ((((c.hours)%24)+24)+min)%24 + 24
 	default:
 		c.hours = ((((c.hours) % 24) + 24) + min) % 24
 	}
-	switch {
-	case (minutes + c.minutes) >= 0:
-		c.minutes = (minutes + c.minutes) % 60
-	default:
-		c.minutes = ((minutes + c.minutes) % 60) + 60
-	}
+	c.minutes = ((minutes + c.minutes) % 60) + 60
+
 	return c
 }
 
 // clockString takes in min and hour integers and
 // converts them to a string expression of time.
-func (c *Clock) String() string {
+func (c Clock) String() string {
 	var hourString string
 	var minString string
 	switch {
 	case c.hours < 10:
 		hourString = fmt.Sprintf("0%v:", c.hours)
 	default:
-		hourString = fmt.Sprintf("0%v:", c.hours)
+		hourString = fmt.Sprintf("%v:", c.hours)
 	}
 	switch {
 	case c.minutes < 10:
