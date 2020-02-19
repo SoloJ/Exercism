@@ -21,22 +21,8 @@ func New(h, m int) Clock {
 	if m < 0 && m != -60 {
 		min = m/60 - 1
 	}
-	switch {
-	case h+min < 0 && h > 0:
-		hour = ((h%24)+min)%24 + 24
-	case h >= 0:
-		hour = ((h % 24) + min) % 24
-	case (((h % 24) + 24) + min) < 0:
-		hour = (((h%24)+24)+min)%24 + 24
-	default:
-		hour = (((h % 24) + 24) + min) % 24
-	}
-	switch {
-	case m >= 0 || m%60 == 0:
-		minute = m % 60
-	default:
-		minute = (m % 60) + 60
-	}
+	hour = modulo(modulo(h, 24)+min, 24)
+	minute = modulo(m, 60)
 	return Clock{hour, minute}
 }
 
@@ -53,23 +39,11 @@ func (c Clock) Add(minutes int) Clock {
 // to the clock time and returns a string.
 func (c Clock) Subtract(minutes int) Clock {
 	min := (c.minutes - minutes) / 60
-	if (c.minutes-minutes) < 0 && (c.minutes-minutes) != -60 {
-		min = (c.minutes-minutes)/60 - 1
+	if (c.minutes-minutes) < 60 && (c.minutes-minutes) != 0 && (c.minutes-minutes) != -60 {
+		min = min - 1
 	}
-	switch {
-	case c.hours-min < 0 && c.hours > 0:
-		c.hours = (((c.hours%24)+min)%24 + 24) % 24
-	case (((c.hours % 24) + 24) + min) < 0:
-		c.hours = ((((c.hours%24)+24)+min)%24 + 24) % 24
-	default:
-		c.hours = (((c.hours % 24) + 24) + min) % 24
-	}
-	switch {
-	case c.minutes-minutes >= 0 || (c.minutes-minutes)%60 == 0:
-		c.minutes = (c.minutes - minutes) % 60
-	default:
-		c.minutes = ((c.minutes - minutes) % 60) + 60
-	}
+	c.hours = modulo(c.hours+min, 24)
+	c.minutes = modulo(c.minutes-minutes, 60)
 	return c
 }
 
@@ -91,4 +65,16 @@ func (c Clock) String() string {
 		minString = fmt.Sprintf("%v", c.minutes)
 	}
 	return (hourString + minString)
+}
+
+// modulo impliments standard modulo functionality in go
+func modulo(in, n int) int {
+	var out int
+	switch {
+	case in >= 0:
+		out = in % n
+	case in < 0:
+		out = (in%n + n) % n
+	}
+	return out
 }
