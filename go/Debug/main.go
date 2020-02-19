@@ -15,15 +15,17 @@ type Clock struct {
 // New takes in hour and min its and
 // outputs the string clock reading they denote.
 func main() {
-	m := 9
-	h := 11
+	m := -60
+	h := 2
 	var hour int
 	var minute int
 	min := m / 60
-	if m < 0 {
+	if m < 0 && m != -60 {
 		min = m/60 - 1
 	}
 	switch {
+	case h+min < 0 && h > 0:
+		hour = ((h%24)+min)%24 + 24
 	case h >= 0:
 		hour = ((h % 24) + min) % 24
 	case (((h % 24) + 24) + min) < 0:
@@ -32,7 +34,7 @@ func main() {
 		hour = (((h % 24) + 24) + min) % 24
 	}
 	switch {
-	case m >= 0:
+	case m >= 0 || m%60 == 0:
 		minute = m % 60
 	default:
 		minute = (m % 60) + 60
