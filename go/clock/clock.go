@@ -15,14 +15,12 @@ type Clock struct {
 // New takes in hour and min its and
 // outputs the string clock reading they denote.
 func New(h, m int) Clock {
-	var hour int
-	var minute int
 	min := m / 60
 	if m < 0 && m != -60 {
 		min = m/60 - 1
 	}
-	hour = modulo(modulo(h, 24)+min, 24)
-	minute = modulo(m, 60)
+	hour := modulo(modulo(h, 24)+min, 24)
+	minute := modulo(m, 60)
 	return Clock{hour, minute}
 }
 
