@@ -26,7 +26,7 @@ func LargestSeriesProduct(in string, n int) (int, error) {
 	case in == "" || n == 0:
 		return 1, nil
 	case n < 0:
-		return -1, errors.New("invalide span")
+		return -1, errors.New("invalid span")
 	}
 	temp := 1
 	out = 0

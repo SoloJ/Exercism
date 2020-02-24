@@ -27,22 +27,15 @@ func New(h, m int) Clock {
 // Add impliments a function that adds minutes
 // to the clock time and returns a string.
 func (c Clock) Add(minutes int) Clock {
-	min := (minutes + c.minutes) / 60
-	c.hours = (((c.hours) % 24) + min) % 24
-	c.minutes = (minutes + c.minutes) % 60
-	return c
+	c.minutes += minutes
+	return New(c.hours, c.minutes)
 }
 
 // Subtract impliments a function that subtracts minutes
 // to the clock time and returns a string.
 func (c Clock) Subtract(minutes int) Clock {
-	min := (c.minutes - minutes) / 60
-	if (c.minutes-minutes) < 60 && (c.minutes-minutes) != 0 && (c.minutes-minutes) != -60 {
-		min = min - 1
-	}
-	c.hours = modulo(c.hours+min, 24)
-	c.minutes = modulo(c.minutes-minutes, 60)
-	return c
+	c.minutes -= minutes
+	return New(c.hours, c.minutes)
 }
 
 // clockString takes in min and hour integers and
