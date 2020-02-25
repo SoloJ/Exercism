@@ -9,63 +9,37 @@ import (
 // Clock defines the struct that is the integer
 // values of a clock.
 type Clock struct {
-	hours, minutes int
+	minutes int
 }
 
 // New takes in hour and min its and
 // outputs the string clock reading they denote.
 func New(h, m int) Clock {
-	min := m / 60
-	if m < 0 && m != -60 {
-		min = m/60 - 1
+	min := (h*60 + m) % (24 * 60)
+	if min < 0 {
+		min += 24 * 60
 	}
-	hour := modulo(modulo(h, 24)+min, 24)
-	minute := modulo(m, 60)
-	return Clock{hour, minute}
+	return Clock{min}
 }
 
 // Add impliments a function that adds minutes
 // to the clock time and returns a string.
 func (c Clock) Add(minutes int) Clock {
 	c.minutes += minutes
-	return New(c.hours, c.minutes)
+	return New(0, c.minutes)
 }
 
 // Subtract impliments a function that subtracts minutes
 // to the clock time and returns a string.
 func (c Clock) Subtract(minutes int) Clock {
 	c.minutes -= minutes
-	return New(c.hours, c.minutes)
+	return New(0, c.minutes)
 }
 
 // clockString takes in min and hour integers and
 // converts them to a string expression of time.
 func (c Clock) String() string {
-	var hourString string
-	var minString string
-	switch {
-	case c.hours < 10:
-		hourString = fmt.Sprintf("0%v:", c.hours)
-	default:
-		hourString = fmt.Sprintf("%v:", c.hours)
-	}
-	switch {
-	case c.minutes < 10:
-		minString = fmt.Sprintf("0%v", c.minutes)
-	default:
-		minString = fmt.Sprintf("%v", c.minutes)
-	}
-	return (hourString + minString)
-}
-
-// modulo impliments standard modulo functionality in go
-func modulo(in, n int) int {
-	var out int
-	switch {
-	case in >= 0:
-		out = in % n
-	case in < 0:
-		out = (in%n + n) % n
-	}
-	return out
+	hour := (c.minutes / 60) % 24
+	c.minutes = c.minutes % 60
+	return fmt.Sprintf("%02d:%02d", hour, c.minutes)
 }
