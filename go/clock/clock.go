@@ -39,7 +39,7 @@ func (c Clock) Subtract(minutes int) Clock {
 // clockString takes in min and hour integers and
 // converts them to a string expression of time.
 func (c Clock) String() string {
-	hour := (c.minutes / 60) % 24
+	hour := (c.minutes / 60)
 	c.minutes = c.minutes % 60
 	return fmt.Sprintf("%02d:%02d", hour, c.minutes)
 }
