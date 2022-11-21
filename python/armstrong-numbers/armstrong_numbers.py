@@ -4,8 +4,8 @@ def is_armstrong_number(number):
     for x in str(number):
         check += int(x)**length
     if check == number:
-        return True
-    return False
+        return check == number
+    return check == number
 
 
-is_armstrong_number(9474)
+is_armstrong_number()
