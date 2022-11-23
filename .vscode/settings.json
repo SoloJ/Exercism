@@ -1,4 +1,6 @@
 {
     "python.pythonPath": "/usr/local/bin/python3",
-    "go.inferGopath": false
+    "go.inferGopath": false,
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
