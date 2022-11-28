@@ -10,8 +10,8 @@ def get_rounds(number):
     :param number: int - current round number.
     :return: list - current round and the two that follow.
     """
-
-    pass
+    output = [number, number+1, number + 2]
+    return output
 
 
 def concatenate_rounds(rounds_1, rounds_2):
@@ -21,8 +21,9 @@ def concatenate_rounds(rounds_1, rounds_2):
     :param rounds_2: list - second set of rounds played.
     :return: list - all rounds played.
     """
-
-    pass
+    for entry in rounds_2:
+        rounds_1.append(entry)
+    return rounds_1
 
 
 def list_contains_round(rounds, number):
@@ -33,7 +34,7 @@ def list_contains_round(rounds, number):
     :return: bool - was the round played?
     """
 
-    pass
+    return number in rounds
 
 
 def card_average(hand):
@@ -42,8 +43,10 @@ def card_average(hand):
     :param hand: list - cards in hand.
     :return: float - average value of the cards in the hand.
     """
-
-    pass
+    temp = 0
+    for entry in hand:
+        temp += entry
+    return temp/len(hand)
 
 
 def approx_average_is_average(hand):
@@ -52,8 +55,10 @@ def approx_average_is_average(hand):
     :param hand: list - cards in hand.
     :return: bool - does one of the approximate averages equal the `true average`?
     """
-
-    pass
+    average = card_average(hand)
+    if average == (hand[0] + hand[-1])/2 or average == hand[int((len(hand)-1)/2)]:
+        return True
+    return False
 
 
 def average_even_is_average_odd(hand):
@@ -62,8 +67,17 @@ def average_even_is_average_odd(hand):
     :param hand: list - cards in hand.
     :return: bool - are even and odd averages equal?
     """
-
-    pass
+    even = []
+    odd = []
+    counter = 0
+    for item in hand:
+        if counter % 2 == 0:
+            odd.append(item)
+            counter += 1
+        else:
+            even.append(item)
+            counter += 1
+    return card_average(odd) == card_average(even)
 
 
 def maybe_double_last(hand):
@@ -72,5 +86,7 @@ def maybe_double_last(hand):
     :param hand: list - cards in hand.
     :return: list - hand with Jacks (if present) value doubled.
     """
-
-    pass
+    if hand[-1] == 11:
+        hand.pop(-1)
+        hand.append(22)
+    return hand
