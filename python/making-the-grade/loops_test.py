@@ -27,7 +27,8 @@ class MakingTheGradeTest(unittest.TestCase):
         for variant, (student_scores, result) in enumerate(data, start=1):
             error_message = f'Expected: {result} but one or more {student_scores} were rounded incorrectly.'
             with self.subTest(f'variation #{variant}', input=student_scores, output=result):
-                self.assertEqual(sorted(round_scores(student_scores)), sorted(result), msg=error_message)
+                self.assertEqual(sorted(round_scores(student_scores)), sorted(
+                    result), msg=error_message)
 
     @pytest.mark.task(taskno=2)
     def test_count_failed_students(self):
@@ -38,7 +39,8 @@ class MakingTheGradeTest(unittest.TestCase):
         for variant, (student_scores, result) in enumerate(data, start=1):
             error_message = f'Expected the count to be {result}, but the count was not calculated correctly.'
             with self.subTest(f'variation #{variant}', input=student_scores, output=result):
-                self.assertEqual(count_failed_students(student_scores), result, msg=error_message)
+                self.assertEqual(count_failed_students(
+                    student_scores), result, msg=error_message)
 
     @pytest.mark.task(taskno=3)
     def test_above_threshold(self):
@@ -52,7 +54,8 @@ class MakingTheGradeTest(unittest.TestCase):
         for variant, (params, result) in enumerate(data, start=1):
             error_message = f'Expected: {result} but the number of scores above the threshold is incorrect.'
             with self.subTest(f'variation #{variant}', input=params, output=result):
-                self.assertEqual(above_threshold(*params), result, msg=error_message)
+                self.assertEqual(above_threshold(*params),
+                                 result, msg=error_message)
 
     @pytest.mark.task(taskno=4)
     def test_letter_grades(self):
@@ -66,7 +69,8 @@ class MakingTheGradeTest(unittest.TestCase):
         for variant, (highest, result) in enumerate(data, start=1):
             error_message = f'Expected: {result} but the grade thresholds for a high score of {highest} are incorrect.'
             with self.subTest(f'variation #{variant}', input=highest, output=result):
-                self.assertEqual(letter_grades(highest), result, msg=error_message)
+                self.assertEqual(letter_grades(highest),
+                                 result, msg=error_message)
 
     @pytest.mark.task(taskno=5)
     def test_student_ranking(self):
@@ -74,19 +78,22 @@ class MakingTheGradeTest(unittest.TestCase):
             (([82], ['Betty']), ['1. Betty: 82']),
             (([88, 73], ['Paul', 'Ernest']), ['1. Paul: 88', '2. Ernest: 73']),
             (
-                ([100, 98, 92, 86, 70, 68, 67, 60], ['Rui', 'Betty', 'Joci', 'Yoshi', 'Kora', 'Bern', 'Jan', 'Rose']),
+                ([100, 98, 92, 86, 70, 68, 67, 60], ['Rui', 'Betty',
+                                                     'Joci', 'Yoshi', 'Kora', 'Bern', 'Jan', 'Rose']),
                 ['1. Rui: 100', '2. Betty: 98', '3. Joci: 92', '4. Yoshi: 86',
                  '5. Kora: 70', '6. Bern: 68', '7. Jan: 67', '8. Rose: 60'])]
 
         for variant, (params, result) in enumerate(data, start=1):
             error_message = f'Expected: {result} but the rankings were compiled incorrectly.'
             with self.subTest(f'variation #{variant}', input=params, output=result):
-                self.assertEqual(student_ranking(*params), result, msg=error_message)
+                self.assertEqual(student_ranking(*params),
+                                 result, msg=error_message)
 
     @pytest.mark.task(taskno=6)
     def test_perfect_score(self):
         data = [
-            ([['Joci', 100], ['Vlad', 100], ['Raiana', 100], ['Alessandro', 100]], ['Joci', 100]),
+            ([['Joci', 100], ['Vlad', 100], ['Raiana', 100],
+              ['Alessandro', 100]], ['Joci', 100]),
             ([['Jill', 30], ['Paul', 73], ], []),
             ([], []),
             (
@@ -99,4 +106,5 @@ class MakingTheGradeTest(unittest.TestCase):
         for variant, (student_info, result) in enumerate(data, start=1):
             error_message = f'Expected: {result} but got something different for perfect scores.'
             with self.subTest(f'variation #{variant}', input=student_info, output=result):
-                self.assertEqual(perfect_score(student_info), result, msg=error_message)
+                self.assertEqual(perfect_score(student_info),
+                                 result, msg=error_message)
